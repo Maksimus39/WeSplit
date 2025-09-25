@@ -1,53 +1,26 @@
-//
-//  ContentView.swift
-//  WeSplit
-//
-//  Created by Максим Минаков on 21.09.2025.
-//
-
 import SwiftUI
 
 struct ContentView: View {
     
-    @State private var tapCount = 0
-    @State private var name = ""
+    @State private var checkAmount = 0.0
+    @State private var numberOfPeople = 2
+    @State private var tipPercentage = 20
     
-    let students = ["Harry", "Hermione", "Ron"]
-    @State private var selectedStudent = "Harry"
+    let tipPercentages: [Int] = [10, 15, 20, 25, 0]
     
-    var body: some View {
-        
-        
-        NavigationStack {
-            Form {
-                Section {
-                    TextField("Enter your name", text: $name)
-                    Text("Hello, world!: \(name)")
-                }
-                .navigationTitle("SwiftUI")
-                .navigationBarTitleDisplayMode(.large)
+    var body: some View{
+        Form{
+            Section{
+                TextField("Amount", value: $checkAmount,
+                          format: .currency(code:
+                                                Locale.current.currency?.identifier ?? "USD"
+                                           ))
+                .keyboardType(.decimalPad)
+            }
+            Section {
+                Text(checkAmount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
             }
         }
-        Button("Tap Count: \(tapCount)") {
-            self.tapCount += 1
-        }
-        
-        Form {
-            ForEach(0 ..< 100) {
-                Text("Row \($0)")
-            }
-        }
-        
-        NavigationStack {
-            Form {
-                Picker("Select your student", selection: $selectedStudent) {
-                    ForEach(students, id: \.self) {
-                        Text($0)
-                    }
-                }
-            }
-        }
-        
     }
 }
 
